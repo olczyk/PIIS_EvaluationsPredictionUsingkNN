@@ -3,29 +3,29 @@ import java.util.ArrayList;
 
 public class Comparator {
 	
-	static final int collectionWeight = 10;
-	static final int budgetWeight = 4;
-	static final int genresWeight = 9;
-	static final int popularityWeight = 5;
-	static final int productionCompaniesWeight = 5;
-	static final int productionCountriesWeight = 6;
-	static final int releaseDateWeight = 7;
-	static final int revenueWeight = 5;
-	static final int runtimeWeight = 2;
-	static final int spokenLanguagesWeight = 8;
-	static final int voteAverageWeight = 5;
-	static final int voteCountWeight = 4;
-	static final int castWeight = 9;
-	static final int costumeMakeUpWeight = 3;
-	static final int directingWeight = 9;
-	static final int cameraWeight = 4;
-	static final int editingWeight = 2;
-	static final int productionWeight = 4;
-	static final int soundWeight = 2;
-	static final int writingWeight = 6;
-	static final int artWeight = 2;
-	static final int crewWeight = 1;
-	static final int visualEffectsWeight = 3;
+	int collectionWeight = 10;
+	int budgetWeight = 4;
+	int genresWeight = 9;
+	int popularityWeight = 5;
+	int productionCompaniesWeight = 5;
+	int productionCountriesWeight = 6;
+	int releaseDateWeight = 7;
+	int revenueWeight = 5;
+	int runtimeWeight = 2;
+	int spokenLanguagesWeight = 8;
+	int voteAverageWeight = 5;
+	int voteCountWeight = 4;
+	int castWeight = 9;
+	int costumeMakeUpWeight = 3;
+	int directingWeight = 9;
+	int cameraWeight = 4;
+	int editingWeight = 2;
+	int productionWeight = 4;
+	int soundWeight = 2;
+	int writingWeight = 6;
+	int artWeight = 2;
+	int crewWeight = 1;
+	int visualEffectsWeight = 3;
 	
 	double collectionSimilarityRate;
 	double budgetSimilarityRate;
@@ -110,90 +110,136 @@ public class Comparator {
 	    this.minVoteCount = GetMinVoteCount();
 	}
 	
-	public double GetMoviesSimilarityRate()
+	public double GetMoviesSimilarityRate(boolean limitedFeatures)
 	{
-		CalculateSimilarityRatesForSeparateFeatures();
+		CalculateSimilarityRatesForSeparateFeatures(limitedFeatures);
 
-		double similarityRate = (
-				collectionWeight * collectionSimilarityRate + 
-				budgetWeight * budgetSimilarityRate + 
-				genresWeight * genresSimilarityRate + 
-				popularityWeight * popularitySimilarityRate +
-				productionCompaniesWeight * productionCompaniesSimilarityRate + 
-				productionCountriesWeight * productionCountriesSimilarityRate + 
-				releaseDateWeight * releaseDateSimilarityRate +
-				revenueWeight * revenueSimilarityRate + 
-				runtimeWeight * runtimeSimilarityRate + 
-				spokenLanguagesWeight * spokenLanguagesSimilarityRate + 
-				voteAverageWeight * voteAverageSimilarityRate +
-				voteCountWeight * voteCountSimilarityRate + 
-				castWeight * castSimilarityRate + 
-				costumeMakeUpWeight * costumeMakeUpSimilarityRate + 
-				directingWeight * directingSimilarityRate +
-				cameraWeight * cameraSimilarityRate + 
-				editingWeight * editingSimilarityRate + 
-				productionWeight * productionSimilarityRate + 
-				soundWeight * soundSimilarityRate +
-				writingWeight * writingSimilarityRate + 
-				artWeight * artSimilarityRate + 
-				crewWeight * crewSimilarityRate + 
-				visualEffectsWeight * visualEffectsSimilarityRate
-				)/(
-				collectionWeight + 
-				budgetWeight + 
-				genresWeight + 
-				popularityWeight + 
-				productionCompaniesWeight + 
-				productionCountriesWeight + 
-				releaseDateWeight + 
-				revenueWeight + 
-				runtimeWeight +
-				spokenLanguagesWeight + 
-				voteAverageWeight +
-				voteCountWeight + 
-				castWeight +
-				costumeMakeUpWeight +
-				directingWeight +
-				cameraWeight +
-				editingWeight +
-				productionWeight +
-				soundWeight +
-				writingWeight +
-				artWeight +
-				crewWeight +
-				visualEffectsWeight
-				); //weighted average
+		double similarityRate = 0;
+		
+		if(!limitedFeatures)
+		{
+			similarityRate = (
+					collectionWeight * collectionSimilarityRate + 
+					budgetWeight * budgetSimilarityRate + 
+					genresWeight * genresSimilarityRate + 
+					popularityWeight * popularitySimilarityRate +
+					productionCompaniesWeight * productionCompaniesSimilarityRate + 
+					productionCountriesWeight * productionCountriesSimilarityRate + 
+					releaseDateWeight * releaseDateSimilarityRate +
+					revenueWeight * revenueSimilarityRate + 
+					runtimeWeight * runtimeSimilarityRate + 
+					spokenLanguagesWeight * spokenLanguagesSimilarityRate + 
+					voteAverageWeight * voteAverageSimilarityRate +
+					voteCountWeight * voteCountSimilarityRate + 
+					castWeight * castSimilarityRate + 
+					costumeMakeUpWeight * costumeMakeUpSimilarityRate + 
+					directingWeight * directingSimilarityRate +
+					cameraWeight * cameraSimilarityRate + 
+					editingWeight * editingSimilarityRate + 
+					productionWeight * productionSimilarityRate + 
+					soundWeight * soundSimilarityRate +
+					writingWeight * writingSimilarityRate + 
+					artWeight * artSimilarityRate + 
+					crewWeight * crewSimilarityRate + 
+					visualEffectsWeight * visualEffectsSimilarityRate
+					)/(
+					collectionWeight + 
+					budgetWeight + 
+					genresWeight + 
+					popularityWeight + 
+					productionCompaniesWeight + 
+					productionCountriesWeight + 
+					releaseDateWeight + 
+					revenueWeight + 
+					runtimeWeight +
+					spokenLanguagesWeight + 
+					voteAverageWeight +
+					voteCountWeight + 
+					castWeight +
+					costumeMakeUpWeight +
+					directingWeight +
+					cameraWeight +
+					editingWeight +
+					productionWeight +
+					soundWeight +
+					writingWeight +
+					artWeight +
+					crewWeight +
+					visualEffectsWeight
+					); //weighted average
+		}
+		else
+		{
+			popularityWeight = 10;
+			runtimeWeight = 9;
+			voteCountWeight = 8;
+			voteAverageWeight = 7;
+			releaseDateWeight = 6;
+			budgetWeight = 5;
+			revenueWeight = 4;
+			productionCountriesWeight = 3;
+			collectionWeight = 2;
+			spokenLanguagesWeight = 1;
+			
+			similarityRate = (
+					collectionWeight * collectionSimilarityRate + 
+					budgetWeight * budgetSimilarityRate + 
+					popularityWeight * popularitySimilarityRate +
+					productionCountriesWeight * productionCountriesSimilarityRate + 
+					releaseDateWeight * releaseDateSimilarityRate +
+					revenueWeight * revenueSimilarityRate + 
+					runtimeWeight * runtimeSimilarityRate + 
+					spokenLanguagesWeight * spokenLanguagesSimilarityRate + 
+					voteAverageWeight * voteAverageSimilarityRate +
+					voteCountWeight * voteCountSimilarityRate 
+					)/(
+					collectionWeight + 
+					budgetWeight + 
+					popularityWeight + 
+					productionCountriesWeight + 
+					releaseDateWeight + 
+					revenueWeight + 
+					runtimeWeight +
+					spokenLanguagesWeight + 
+					voteAverageWeight +
+					voteCountWeight
+					); //weighted average
+		}
 		
 		//System.out.println("************** MOVIES SIMILARTY RATE **************");
 		//System.out.println("Similarity rate = " + similarityRate);
 		return similarityRate;
 	}
 	
-	private void CalculateSimilarityRatesForSeparateFeatures()
+	public void CalculateSimilarityRatesForSeparateFeatures(boolean limitedFeatures)
 	{
-		collectionSimilarityRate = GetSimilarityRateForCollection();
-		budgetSimilarityRate = GetSimilarityRateForBudget();
-		genresSimilarityRate = GetSimilarityRateForGenre();
 		popularitySimilarityRate = GetSimilarityRateForPopularity();
-		productionCompaniesSimilarityRate = GetSimilarityRateForProductionCompanies();
-		productionCountriesSimilarityRate = GetSimilarityRateForProductionCountries();
-		releaseDateSimilarityRate = GetSimilarityRateForReleaseDate();
-		revenueSimilarityRate = GetSimilarityRateForRevenue();
 		runtimeSimilarityRate = GetSimilarityRateForRuntime();
-		spokenLanguagesSimilarityRate = GetSimilarityRateForSpokenLanguages();
-		voteAverageSimilarityRate = GetSimilarityRateForVoteAverage();
 		voteCountSimilarityRate = GetSimilarityRateForVoteCount();
-		castSimilarityRate = GetSimilarityRateForCast();
-		costumeMakeUpSimilarityRate = GetSimilarityRateForCostumeMakeUp();
-		directingSimilarityRate = GetSimilarityRateForDirecting();
-		cameraSimilarityRate = GetSimilarityRateForCamera();
-		editingSimilarityRate = GetSimilarityRateForEditing();
-		productionSimilarityRate = GetSimilarityRateForProduction();
-		soundSimilarityRate = GetSimilarityRateForSound();
-		writingSimilarityRate = GetSimilarityRateForWriting();
-		artSimilarityRate = GetSimilarityRateForArt();
-		crewSimilarityRate = GetSimilarityRateForCrew();
-		visualEffectsSimilarityRate = GetSimilarityRateForVisualEffects();
+		voteAverageSimilarityRate = GetSimilarityRateForVoteAverage();
+		releaseDateSimilarityRate = GetSimilarityRateForReleaseDate();
+		budgetSimilarityRate = GetSimilarityRateForBudget();
+		revenueSimilarityRate = GetSimilarityRateForRevenue();
+		productionCountriesSimilarityRate = GetSimilarityRateForProductionCountries();
+		collectionSimilarityRate = GetSimilarityRateForCollection();
+		spokenLanguagesSimilarityRate = GetSimilarityRateForSpokenLanguages();
+
+		if(!limitedFeatures)
+		{
+			genresSimilarityRate = GetSimilarityRateForGenre();
+			productionCompaniesSimilarityRate = GetSimilarityRateForProductionCompanies();
+			castSimilarityRate = GetSimilarityRateForCast();
+			costumeMakeUpSimilarityRate = GetSimilarityRateForCostumeMakeUp();
+			directingSimilarityRate = GetSimilarityRateForDirecting();
+			productionSimilarityRate = GetSimilarityRateForProduction();
+			soundSimilarityRate = GetSimilarityRateForSound();
+			cameraSimilarityRate = GetSimilarityRateForCamera();
+			writingSimilarityRate = GetSimilarityRateForWriting();
+			editingSimilarityRate = GetSimilarityRateForEditing();
+			artSimilarityRate = GetSimilarityRateForArt();
+			crewSimilarityRate = GetSimilarityRateForCrew();
+			visualEffectsSimilarityRate = GetSimilarityRateForVisualEffects();
+		}
 	}
 	
 	private double GetSimilarityRateForCollection()

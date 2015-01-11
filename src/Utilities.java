@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -37,6 +38,25 @@ public class Utilities {
 		readMissingEvaluationsFile(fileName);
 		
 		return MissingEvaluations;
+	}
+	
+	public void SavePredictedEvaluationsToFile(String fileName, ArrayList<Evaluation> PredictedEvaluations) throws IOException
+	{
+		FileWriter fw = new FileWriter(fileName);
+		
+		for(int i=0; i<PredictedEvaluations.size();i++)
+		{
+			fw.append(Integer.toString(PredictedEvaluations.get(i).id));
+			fw.append(";");
+			fw.append(Integer.toString(PredictedEvaluations.get(i).personId));
+			fw.append(";");
+			fw.append(Integer.toString(PredictedEvaluations.get(i).movieId));
+			fw.append(";");
+			fw.append(PredictedEvaluations.get(i).evaluation);
+			fw.append("\n");
+		}
+		fw.flush();
+	    fw.close();
 	}
 	
 	private void readMoviesFile(String fileName) throws NumberFormatException, IOException

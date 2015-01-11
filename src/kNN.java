@@ -8,13 +8,15 @@ public class kNN {
 	ArrayList<Evaluation> Evaluations;
 	ArrayList<Evaluation> MissingEvaluations;
 	ArrayList<Movie> Movies;
+	boolean limitedFeatures;
 	
-	kNN(int k, ArrayList<Evaluation> Evaluations, ArrayList<Evaluation> MissingEvaluations, ArrayList<Movie> Movies)
+	kNN(int k, ArrayList<Evaluation> Evaluations, ArrayList<Evaluation> MissingEvaluations, ArrayList<Movie> Movies, boolean limitedFeatures)
 	{
 		this.k = k;
 		this.Evaluations = Evaluations;
 		this.MissingEvaluations = MissingEvaluations;
 		this.Movies = Movies;
+		this.limitedFeatures = limitedFeatures;
 	}
 	
 	public ArrayList<Evaluation> PredictEvaluations()
@@ -90,7 +92,7 @@ public class kNN {
 		{
 			int currentEvaluatedMovieId = PersonEvaluations.get(i).movieId;
 			Comparator comparator = new Comparator(Movies.get(movieId-1), Movies.get(currentEvaluatedMovieId-1), Movies); 
-			double similarityRate = comparator.GetMoviesSimilarityRate();
+			double similarityRate = comparator.GetMoviesSimilarityRate(limitedFeatures);
 			
 			if(similarityRate > bestMatch.similarityRate)
 			{
@@ -113,7 +115,7 @@ public class kNN {
 		{
 			int currentEvaluatedMovieId = PersonEvaluations.get(i).movieId;
 			Comparator comparator = new Comparator(Movies.get(movieId-1), Movies.get(currentEvaluatedMovieId-1), Movies); 
-			double similarityRate = comparator.GetMoviesSimilarityRate();
+			double similarityRate = comparator.GetMoviesSimilarityRate(limitedFeatures);
 			
 			if(i<k)
 			{
@@ -159,35 +161,4 @@ public class kNN {
 		
 		return Integer.toString(averageEvaluation);
 	}
-	
-//	private int GetEvaluationBySimilarityRate(double similarityRate)
-//	{
-//		int evaluation = 0;
-//		
-//		if(similarityRate < 0.166)
-//		{
-//			evaluation = 0;
-//		}
-//		else if(similarityRate >= 0.166 && similarityRate < 0.332)
-//		{
-//			evaluation = 1;
-//		}
-//		else if(similarityRate >= 0.332 && similarityRate < 0.498)
-//		{
-//			evaluation = 2;
-//		}
-//		else if(similarityRate >= 0.498 && similarityRate < 0.664)
-//		{
-//			evaluation = 3;
-//		}
-//		else if(similarityRate >= 0.664 && similarityRate < 0.83)
-//		{
-//			evaluation = 4;
-//		}
-//		else if(similarityRate >= 0.83 && similarityRate <= 1)
-//		{
-//			evaluation = 5;
-//		}
-//		return evaluation;
-//	}
 }
